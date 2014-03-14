@@ -13,7 +13,7 @@ public class BomberClient {
 
 		String received;
 		int playerPort;
-		InetAddress address;
+		InetAddress address; //random change to see if this works....
 
 		if (args.length != 1){
 			System.out.println("Usage: java BomberClient <hostname>");
