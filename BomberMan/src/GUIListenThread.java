@@ -14,12 +14,13 @@ public class GUIListenThread extends Thread{
 
 	private DatagramSocket socket;
 	
-	JPanel panel = new JPanel();
-	JFrame frame = new JFrame();
-	JLabel labels[] = new JLabel[315];
-	String received;
+	private JPanel panel = new JPanel();
+	private JFrame frame = new JFrame();
+	private JLabel labels[] = new JLabel[315];
+	private String received;
+	private char[][] boardView = new char[21][15];
 
-	GUIListenThread(DatagramSocket socket) {
+	public GUIListenThread(DatagramSocket socket) {
 		this.socket = socket;
 		frame.setSize(800, 700);
 		frame.setResizable(true);
@@ -49,6 +50,23 @@ public class GUIListenThread extends Thread{
 				e.printStackTrace();
 			}
 			received = new String(fromServer.getData());
+		}	
+	}
+	
+	synchronized void stringToArray()
+	{
+		int n = 0, m = 0;
+		char read;
+		
+		for(int i = 0;i<=received.length();i++){
+			read = received.charAt(i);
+			boardView[n][m] = read;
+			if(read =='\n'){
+				n=0;
+				m++;
+			}else if(read == '\0'){
+				return;
+			}
 		}	
 	}
 }
