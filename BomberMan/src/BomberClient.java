@@ -22,7 +22,7 @@ public class BomberClient {
 		DatagramSocket socket = new DatagramSocket();  // only need to make 1 socket
 
 			// send a request to join the game.
-		byte[] buf = new byte[1];
+		byte[] buf = new byte[5];
 		buf[1] = 0x02;
 		address = InetAddress.getByName(args[0]);
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 10000);
