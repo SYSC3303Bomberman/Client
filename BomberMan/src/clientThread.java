@@ -25,14 +25,12 @@ class clientThread extends Thread
 		Scanner sc2 = null;
 	    try {
 	        sc2 = new Scanner(new File("inputs.txt"));
+	        startRequest();
 	    } catch (FileNotFoundException e) {
 	        e.printStackTrace();  
-	    }
-	    try {
-			startRequest();
-		} catch (IOException e1) {
+	    } catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 	    while (sc2.hasNextLine()) {
 	    	Scanner s2 = new Scanner(sc2.nextLine());
@@ -54,8 +52,7 @@ class clientThread extends Thread
 				}
 	        }
 	        s2.close();
-	    }
-		
+	    }	
 		
 	}
 
@@ -79,7 +76,7 @@ class clientThread extends Thread
 			return false;
 		}else if(received[1]==0x00){
 			
-			GUIListenThread cheeseBurger = new GUIListenThread(socket);
+			GUIListenThread cheeseBurger = new GUIListenThread(socket);	//can I haz?
 			cheeseBurger.start();
 			return true;
 
