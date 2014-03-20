@@ -79,7 +79,7 @@ class clientThread extends Thread
 			return false;
 		}else if(received[1]==0x00){
 			
-			GUIListenThread cheeseBurger = new GUIListenThread(socketAddress, socket);
+			GUIListenThread cheeseBurger = new GUIListenThread(socket);
 			cheeseBurger.start();
 			return true;
 
