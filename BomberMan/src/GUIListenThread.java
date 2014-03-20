@@ -1,19 +1,31 @@
+import java.io.IOException;
+import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.SocketAddress;
 
 
 public class GUIListenThread extends Thread {
 
-	private SocketAddress socketAddress;
 	private DatagramSocket socket;
 
-	GUIListenThread(SocketAddress socketAddress, DatagramSocket socket) {
-		this.socketAddress = socketAddress;
+	GUIListenThread(DatagramSocket socket) {
 		this.socket = socket;
 	}
 		
 	public void run()
 	{
+		
+		for(;;){
+			byte[] buf = new byte[256];
+			DatagramPacket fromServer = new DatagramPacket(buf, buf.length);
+			try {
+				socket.receive(fromServer);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String received = new String(fromServer.getData());
+			// put received on some form of IPC.
+		}
 		
 	}
 
