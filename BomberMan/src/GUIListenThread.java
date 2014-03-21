@@ -18,7 +18,7 @@ public class GUIListenThread extends Thread{
 	private JFrame frame = new JFrame();
 	private JLabel labels[] = new JLabel[315];
 	private String received;
-	private char[][] boardView = new char[21][15];
+	private char[][] boardView = new char[15][21];
 
 	public GUIListenThread(DatagramSocket socket) {
 		this.socket = socket;
@@ -50,9 +50,23 @@ public class GUIListenThread extends Thread{
 				e.printStackTrace();
 			}
 			received = new String(fromServer.getData());
+			stringToArray();
+			updateGUI();
 		}	
 	}
 	
+	private void updateGUI() {
+		// TODO Auto-generated method stub
+		for (int i = 0; i < 21; i ++)
+		{
+			for (int j = 0; j < 15; j++)
+			{
+				labels[21*j+i].setText("" + boardView[j][i]);
+			}
+		}
+		
+	}
+
 	synchronized void stringToArray()
 	{
 		int n = 0, m = 0;
