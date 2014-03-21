@@ -21,10 +21,10 @@ public class BomberClient {
 			// get a datagram socket.
 		DatagramSocket socket = new DatagramSocket();  // only need to make 1 socket
 		
-		/*
+		
 		GUIListenThread cheeseBurger = new GUIListenThread(socket);	//can I haz?
-		cheeseBurger.start(); // this is the override.
-		*/
+		cheeseBurger.start(); // This is the override. It is for quick booting the GUI
+		
 
 			// send a request to join the game.
 		byte[] buf = new byte[1];

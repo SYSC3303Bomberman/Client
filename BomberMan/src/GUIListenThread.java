@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class GUIListenThread extends Thread{
 
 	private DatagramSocket socket;
-	
+
 	private JPanel panel = new JPanel();
 	private JFrame frame = new JFrame();
 	private JLabel labels[] = new JLabel[315];
@@ -36,10 +36,10 @@ public class GUIListenThread extends Thread{
 		frame.add(panel);
 		frame.setVisible(true);
 	}
-		
+
 	public void run()
 	{
-		
+
 		for(;;){
 			byte[] buf = new byte[256];
 			DatagramPacket fromServer = new DatagramPacket(buf, buf.length);
@@ -50,11 +50,12 @@ public class GUIListenThread extends Thread{
 				e.printStackTrace();
 			}
 			received = new String(fromServer.getData());
+			
 			stringToArray();
 			updateGUI();
 		}	
 	}
-	
+
 	private void updateGUI() {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < 21; i ++)
@@ -64,22 +65,24 @@ public class GUIListenThread extends Thread{
 				labels[21*j+i].setText("" + boardView[j][i]);
 			}
 		}
-		
+
 	}
 
 	synchronized void stringToArray()
 	{
 		int n = 0, m = 0;
 		char read;
-		
+
 		for(int i = 0;i<=received.length();i++){
 			read = received.charAt(i);
-			boardView[n][m] = read;
 			if(read =='\n'){
 				n=0;
 				m++;
 			}else if(read == '\0'){
 				return;
+			}else{
+				boardView[m][n] = read;
+				n++;
 			}
 		}	
 	}
