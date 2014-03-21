@@ -22,8 +22,8 @@ public class BomberClient {
 		DatagramSocket socket = new DatagramSocket();  // only need to make 1 socket
 
 			// send a request to join the game.
-		byte[] buf = new byte[5];
-		buf[1] = 0x02;
+		byte[] buf = new byte[1];
+		buf[0] = 0x02;
 		address = InetAddress.getByName(args[0]);
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, address, 10000);
 		socket.send(packet);
@@ -34,11 +34,11 @@ public class BomberClient {
 
 		received = packet.getData();
 		
-		if(received[1]==0x01){
+		if(received[0]==0x01){
 			System.out.println("Server Denied Join Request.");
 			socket.close();
 			return;
-		}else if(received[1]==0x00){
+		}else if(received[0]==0x00){
 			SocketAddress socketAddress = packet.getSocketAddress();
 			
 			clientThread play = new clientThread(socketAddress, socket);

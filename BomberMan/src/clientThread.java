@@ -60,7 +60,7 @@ class clientThread extends Thread
 		
 			// send a request to join the game.
 		byte[] buf = new byte[1];
-		buf[1] = 0x03; 			// eventually this will wait user input... for now we just request start right away
+		buf[0] = 0x03; 			// eventually this will wait user input... for now we just request start right away
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, socketAddress);
 		socket.send(packet);
 	
@@ -70,11 +70,11 @@ class clientThread extends Thread
 	
 		byte[] received = packet.getData();
 		
-		if(received[1]==0x01){
+		if(received[0]==0x01){
 			System.out.println("Server Denied Start Request.");
 			socket.close();
 			return false;
-		}else if(received[1]==0x00){
+		}else if(received[0]==0x00){
 			
 			GUIListenThread cheeseBurger = new GUIListenThread(socket);	//can I haz?
 			cheeseBurger.start();
