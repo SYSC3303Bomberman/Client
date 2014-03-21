@@ -56,9 +56,9 @@ class clientThread extends Thread
 		
 	}
 
-	private boolean startRequest() throws IOException {
+	private void startRequest() throws IOException {
 		
-			// send a request to join the game.
+			// send a request to start the game.
 		byte[] buf = new byte[1];
 		buf[0] = 0x03; 			// eventually this will wait user input... for now we just request start right away
 		DatagramPacket packet = new DatagramPacket(buf, buf.length, socketAddress);
@@ -67,23 +67,22 @@ class clientThread extends Thread
 			// get servers response.
 		packet = new DatagramPacket(buf, buf.length);
 		socket.receive(packet);
-	
 		byte[] received = packet.getData();
 		
-		if(received[0]==0x01){
+		if(received[0]==0x01){		//if NACK
 			System.out.println("Server Denied Start Request.");
 			socket.close();
-			return false;
-		}else if(received[0]==0x00){
+			return;
+		}else if(received[0]==0x00){	//if ACK
 			
 			GUIListenThread cheeseBurger = new GUIListenThread(socket);	//can I haz?
 			cheeseBurger.start();
-			return true;
+			return;
 
 		}else{
 			System.out.println("**UNEXPECTED RESPONSE FROM SERVER FOR START**");
 			socket.close();
-			return false;
+			return;
 		}
 		
 	}

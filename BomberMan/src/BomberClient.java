@@ -11,9 +11,9 @@ public class BomberClient {
 	public static void main(String[] args) throws IOException {
 
 		byte[] received;
-		InetAddress address; //random change to see if this works....
+		InetAddress address;
 
-		if (args.length != 1){
+		if (args.length != 1){		// Client needs to have a host machine as an input argument
 			System.out.println("Usage: java BomberClient <hostname>");
 			return;
 		}
@@ -34,13 +34,12 @@ public class BomberClient {
 
 		received = packet.getData();
 		
-		if(received[0]==0x01){
+		if(received[0]==0x01){		// if NACK
 			System.out.println("Server Denied Join Request.");
 			socket.close();
 			return;
-		}else if(received[0]==0x00){
+		}else if(received[0]==0x00){	// if ACK
 			SocketAddress socketAddress = packet.getSocketAddress();
-			
 			clientThread play = new clientThread(socketAddress, socket);
 			play.start();
 		}else{
